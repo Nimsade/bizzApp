@@ -11,10 +11,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 
 const RegisterPage = () => {
-  const [inputsValue, setInputsValue] = useState({
+	const [inputsValue, setInputsValue] = useState({
 		first: "",
 		middle: "",
-		last: "",
 		email: "",
 		password: "",
 		phone: "",
@@ -27,38 +26,38 @@ const RegisterPage = () => {
 		houseNumber: "",
 		zip: "",
 	});
-  const handleInputsChange = (e) => {
-    /**
-     * e.target.id -> name of property to update
-     * e.target.value -> the value
-     */
+	const handleInputsChange = (e) => {
+		/**
+		 * e.target.id -> name of property to update
+		 * e.target.value -> the value
+		 */
 
-    // step 1
-    // setInputsValue((CopyOfCurrentValue) => {
-    // CopyOfCurrentValue.first = e.target.value;
-    // return CopyOfCurrentValue; //x
-    // return { ...CopyOfCurrentValue }; //v
-    // });
+		// step 1
+		// setInputsValue((CopyOfCurrentValue) => {
+		// CopyOfCurrentValue.first = e.target.value;
+		// return CopyOfCurrentValue; //x
+		// return { ...CopyOfCurrentValue }; //v
+		// });
 
-    // step 2
-    // setInputsValue((CopyOfCurrentValue) => {
-    //   CopyOfCurrentValue[e.target.id] = e.target.value;
-    //   return { ...CopyOfCurrentValue };
-    // });
+		// step 2
+		// setInputsValue((CopyOfCurrentValue) => {
+		//   CopyOfCurrentValue[e.target.id] = e.target.value;
+		//   return { ...CopyOfCurrentValue };
+		// });
 
-    // step 3
-    // setInputsValue((CopyOfCurrentValue) => ({
-    //   ...CopyOfCurrentValue,
-    //   first: e.target.value,
-    // }));
+		// step 3
+		// setInputsValue((CopyOfCurrentValue) => ({
+		//   ...CopyOfCurrentValue,
+		//   first: e.target.value,
+		// }));
 
-    // final boss
-    setInputsValue((CopyOfCurrentValue) => ({
-      ...CopyOfCurrentValue,
-      [e.target.id]: e.target.value,
-    }));
-  };
-  return (
+		// final boss
+		setInputsValue((CopyOfCurrentValue) => ({
+			...CopyOfCurrentValue,
+			[e.target.id]: e.target.value,
+		}));
+	};
+	return (
 		<Box
 			sx={{
 				marginTop: 8,

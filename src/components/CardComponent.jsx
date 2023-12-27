@@ -1,13 +1,13 @@
 import {
-	Card,
-	CardHeader,
-	CardContent,
-	Typography,
-	CardActionArea,
-	CardMedia,
-	Divider,
-	IconButton,
-	Box,
+  Card,
+  CardHeader,
+  CardContent,
+  Typography,
+  CardActionArea,
+  CardMedia,
+  Divider,
+  IconButton,
+  Box,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeIcon from "@mui/icons-material/Mode";
@@ -20,37 +20,37 @@ import PropTypes from "prop-types";
  * subtitle -> subheader
  */
 const CardComponent = ({
-	title,
-	subtitle,
-	img,
-	phone,
-	address,
-	cardNumber,
-	id,
-	onDelete,
-	onEdit,
-	onPhone,
-	onLike,
+  title,
+  subtitle,
+  img,
+  phone,
+  address,
+  cardNumber,
+  id,
+  onDelete,
+  onEdit,
+  onPhone,
+  onLike,
 }) => {
-	// let { title, subtitle, img, body } = props;
-	// console.log(props);
-	const handleDeleteClick = () => {
-		console.log("Clicked on delete", id);
-		onDelete(id);
-	};
-	const handleEditClick = () => {
-		console.log("Clicked on edit", id);
-		onEdit(id);
-	};
-	const handlePhoneClick = () => {
-		console.log(phone);
-		onPhone(phone);
-	};
-	const handleLikeClick = () => {
-		console.log("Clicked on like", id);
-		onLike(id);
-	};
-	return (
+  // let { title, subtitle, img, body } = props;
+  // console.log(props);
+  const handleDeleteClick = () => {
+    console.log("Clicked on delete", id);
+    onDelete(id);
+  };
+  const handleEditClick = () => {
+    console.log("Clicked on edit", id);
+    onEdit(id);
+  };
+  const handlePhoneClick = () => {
+    console.log("Clicked on phone", id);
+    onPhone(id);
+  };
+  const handleLikeClick = () => {
+    console.log("Clicked on like", id);
+    onLike(id);
+  };
+  return (
 		<Card square raised>
 			<CardActionArea>
 				<CardMedia
@@ -105,21 +105,21 @@ const CardComponent = ({
 };
 
 CardComponent.propTypes = {
-	title: PropTypes.string.isRequired,
-	subtitle: PropTypes.string,
-	img: PropTypes.string,
-	phone: PropTypes.string.isRequired,
-	address: PropTypes.shape({
-		city: PropTypes.string.isRequired,
-		street: PropTypes.string.isRequired,
-		houseNumber: PropTypes.number.isRequired,
-	}).isRequired,
-	cardNumber: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+  img: PropTypes.string,
+  phone: PropTypes.string.isRequired,
+  address: PropTypes.shape({
+    city: PropTypes.string.isRequired,
+    street: PropTypes.string.isRequired,
+    houseNumber: PropTypes.number.isRequired,
+  }).isRequired,
+  cardNumber: PropTypes.number.isRequired,
 };
 
 CardComponent.defaultProps = {
-	img: car1,
-	subtitle: "subtitle default",
+  img: car1,
+  subtitle: "subtitle default",
 };
 
 export default CardComponent;
