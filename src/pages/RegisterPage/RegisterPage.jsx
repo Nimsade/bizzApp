@@ -1,19 +1,24 @@
 import { useState } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
+import {Alert,Avatar,
+Button,
+TextField,
+FormControlLabel,
+Checkbox,
+Grid,
+Box,
+Typography} from "@mui/material";
+import axios from "axios";
+import ROUTES from "../../routes/ROUTES";
+import { useNavigate, Link } from "react-router-dom";
+import normalizeRegister from "./normalizeRegister";
+import { validateSchema } from "../../validation/registerValidation";
 
 const RegisterPage = () => {
 	const [inputsValue, setInputsValue] = useState({
 		first: "",
 		middle: "",
+		last: "",
 		email: "",
 		password: "",
 		phone: "",
@@ -25,37 +30,59 @@ const RegisterPage = () => {
 		street: "",
 		houseNumber: "",
 		zip: "",
+		isBusiness: "",
 	});
+	const [errors, setErrors] = useState({
+		first: "",
+		last: "",
+		email: "",
+		password: "",
+		phone: "",
+		country: "",
+		city: "",
+		street: "",
+		houseNumber: "",
+		zip: "",
+	});
+	const navigate = useNavigate();
 	const handleInputsChange = (e) => {
-		/**
-		 * e.target.id -> name of property to update
-		 * e.target.value -> the value
-		 */
-
-		// step 1
-		// setInputsValue((CopyOfCurrentValue) => {
-		// CopyOfCurrentValue.first = e.target.value;
-		// return CopyOfCurrentValue; //x
-		// return { ...CopyOfCurrentValue }; //v
-		// });
-
-		// step 2
-		// setInputsValue((CopyOfCurrentValue) => {
-		//   CopyOfCurrentValue[e.target.id] = e.target.value;
-		//   return { ...CopyOfCurrentValue };
-		// });
-
-		// step 3
-		// setInputsValue((CopyOfCurrentValue) => ({
-		//   ...CopyOfCurrentValue,
-		//   first: e.target.value,
-		// }));
-
-		// final boss
-		setInputsValue((CopyOfCurrentValue) => ({
-			...CopyOfCurrentValue,
-			[e.target.id]: e.target.value,
-		}));
+		const { id, value, type, checked } = e.target;
+		if (type === "checkbox") {
+			   setInputsValue((copyOfCurrentValue) => ({
+      ...copyOfCurrentValue,
+      [id]: checked,
+    }));
+  } else {
+  setInputsValue((copyOfCurrentValue) => ({
+      ...copyOfCurrentValue,
+      [id]: value,
+    }));
+  }
+};
+	const handleInputsBlur = (e) => {
+		let dataFromJoi = validateSchema[e.target.id]({
+			[e.target.id]: inputsValue[e.target.id],
+		});
+		if (dataFromJoi.error) {
+			setErrors((copyOfErrors) => ({
+				...copyOfErrors,
+				[e.target.id]: dataFromJoi.error.details[0].message,
+			}));
+		} else {
+			setErrors((copyOfErrors) => {
+				delete copyOfErrors[e.target.id];
+				return { ...copyOfErrors };
+			});
+		}
+	};
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			await axios.post("/users", normalizeRegister(inputsValue));
+			navigate(ROUTES.LOGIN);
+		} catch (err) {
+			console.log("error from axios", err);
+		}
 	};
 	return (
 		<Box
@@ -72,7 +99,7 @@ const RegisterPage = () => {
 			<Typography component="h1" variant="h5">
 				Sign up
 			</Typography>
-			<Box component="form" noValidate sx={{ mt: 3 }}>
+			<Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
 				<Grid container spacing={2}>
 					<Grid item xs={12} sm={4}>
 						<TextField
@@ -85,7 +112,9 @@ const RegisterPage = () => {
 							autoFocus
 							value={inputsValue.first}
 							onChange={handleInputsChange}
+							onBlur={handleInputsBlur}
 						/>
+						{errors.first && <Alert severity="error">{errors.first}</Alert>}
 					</Grid>
 					<Grid item xs={12} sm={4}>
 						<TextField
@@ -94,10 +123,10 @@ const RegisterPage = () => {
 							fullWidth
 							id="middle"
 							label="Middle Name"
-							autoFocus
 							value={inputsValue.middle}
 							onChange={handleInputsChange}
 						/>
+						{errors.middle && <Alert severity="error">{errors.middle}</Alert>}
 					</Grid>
 					<Grid item xs={12} sm={4}>
 						<TextField
@@ -109,7 +138,9 @@ const RegisterPage = () => {
 							autoComplete="family-name"
 							value={inputsValue.last}
 							onChange={handleInputsChange}
+							onBlur={handleInputsBlur}
 						/>
+						{errors.last && <Alert severity="error">{errors.last}</Alert>}
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
@@ -121,7 +152,9 @@ const RegisterPage = () => {
 							autoComplete="email"
 							value={inputsValue.email}
 							onChange={handleInputsChange}
+							onBlur={handleInputsBlur}
 						/>
+						{errors.email && <Alert severity="error">{errors.email}</Alert>}
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
@@ -134,7 +167,11 @@ const RegisterPage = () => {
 							autoComplete="new-password"
 							value={inputsValue.password}
 							onChange={handleInputsChange}
+							onBlur={handleInputsBlur}
 						/>
+						{errors.password && (
+							<Alert severity="error">{errors.password}</Alert>
+						)}
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
@@ -146,7 +183,9 @@ const RegisterPage = () => {
 							autoComplete="new-phone"
 							value={inputsValue.phone}
 							onChange={handleInputsChange}
+							onBlur={handleInputsBlur}
 						/>
+						{errors.phone && <Alert severity="error">{errors.phone}</Alert>}
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
@@ -158,6 +197,7 @@ const RegisterPage = () => {
 							value={inputsValue.url}
 							onChange={handleInputsChange}
 						/>
+						{errors.url && <Alert severity="error">{errors.url}</Alert>}
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
@@ -169,6 +209,7 @@ const RegisterPage = () => {
 							value={inputsValue.alt}
 							onChange={handleInputsChange}
 						/>
+						{errors.alt && <Alert severity="error">{errors.alt}</Alert>}
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
@@ -180,6 +221,7 @@ const RegisterPage = () => {
 							value={inputsValue.state}
 							onChange={handleInputsChange}
 						/>
+						{errors.state && <Alert severity="error">{errors.state}</Alert>}
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
@@ -191,7 +233,9 @@ const RegisterPage = () => {
 							autoComplete="new-country"
 							value={inputsValue.country}
 							onChange={handleInputsChange}
+							onBlur={handleInputsBlur}
 						/>
+						{errors.country && <Alert severity="error">{errors.country}</Alert>}
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
@@ -203,7 +247,9 @@ const RegisterPage = () => {
 							autoComplete="new-city"
 							value={inputsValue.city}
 							onChange={handleInputsChange}
+							onBlur={handleInputsBlur}
 						/>
+						{errors.city && <Alert severity="error">{errors.city}</Alert>}
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
@@ -215,7 +261,9 @@ const RegisterPage = () => {
 							autoComplete="new-street"
 							value={inputsValue.street}
 							onChange={handleInputsChange}
+							onBlur={handleInputsBlur}
 						/>
+						{errors.street && <Alert severity="error">{errors.street}</Alert>}
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
@@ -227,10 +275,15 @@ const RegisterPage = () => {
 							autoComplete="new-houseNumber"
 							value={inputsValue.houseNumber}
 							onChange={handleInputsChange}
+							onBlur={handleInputsBlur}
 						/>
+						{errors.houseNumber && (
+							<Alert severity="error">{errors.houseNumber}</Alert>
+						)}
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
+							required
 							fullWidth
 							name="zip"
 							label="Zip"
@@ -238,13 +291,31 @@ const RegisterPage = () => {
 							autoComplete="new-zip"
 							value={inputsValue.zip}
 							onChange={handleInputsChange}
+							onBlur={handleInputsBlur}
 						/>
+						{errors.zip && <Alert severity="error">{errors.zip}</Alert>}
 					</Grid>
 					<Grid item xs={12}>
 						<FormControlLabel
-							control={<Checkbox value="allowExtraEmails" color="primary" />}
+							control={
+								<Checkbox
+									color="primary"
+									required
+									fullWidth
+									name="isBusiness"
+									label="isBusiness"
+									id="isBusiness"
+									autoComplete="new-isBusiness"
+									value={inputsValue.isBusiness}
+									onChange={handleInputsChange}
+									onBlur={handleInputsBlur}
+								/>
+							}
 							label="Business Account"
 						/>
+						{errors.isBusiness && (
+							<Alert severity="error">{errors.isBusiness}</Alert>
+						)}
 					</Grid>
 				</Grid>
 				<Button
@@ -252,12 +323,13 @@ const RegisterPage = () => {
 					fullWidth
 					variant="contained"
 					sx={{ mt: 3, mb: 2 }}
+					disabled={Object.keys(errors).length > 0}
 				>
 					Sign Up
 				</Button>
 				<Grid container justifyContent="flex-end">
 					<Grid item>
-						<Link href="#" variant="body2">
+						<Link to={ROUTES.LOGIN} variant="body2" >
 							Already have an account? Sign in
 						</Link>
 					</Grid>

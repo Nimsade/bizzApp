@@ -1,91 +1,89 @@
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import React, { useContext, useEffect, useState } from "react";
+import { Grid, Typography, Button } from "@mui/material";
 import CardComponent from "../../components/CardComponent";
-import { Link, useNavigate } from "react-router-dom";
-import ROUTES from "../../routes/ROUTES";
-
-const initialDataFromServer = [
-	{
-		id: "sdlfkjgn0",
-		title: "title1",
-		subtitle: "subtitle1",
-		body: "body1",
-		img: "/assets/imgs/car 1.jpg",
-	},
-	{
-		id: "sdlfkjgn1",
-		title: "title2",
-		subtitle: "subtitle2",
-		body: "body2",
-		img: "/assets/imgs/car 2.jpg",
-	},
-	{
-		id: "sdlfkjgn2",
-		title: "title3",
-		subtitle: "subtitle3",
-		body: "body3",
-		img: "/assets/imgs/car 3.jpg",
-	},
-	{
-		id: "sdlfkjgn3",
-		title: "title4",
-		subtitle: "subtitle4",
-		body: "body4",
-		img: "/assets/imgs/car 4.jpg",
-	},
-	{
-		id: "sdlfkjgn4",
-		title: "title5",
-		subtitle: "subtitle5",
-		body: "body5",
-		img: "/assets/imgs/car 5.png",
-	},
-];
-
-// const initialDataFromServer = [];
-
-const handleDeleteCard = (id) => {
-	console.log("father: card to delete", id);
-};
-const handleEditCard = (id) => {
-  return(
-	<Link to={`${ROUTES.EDITCARD}/id`} ></Link>
-  )};
-const handlePhoneCard = (id) => {
-	console.log("father: card to phone", id);
-};
-const handleLikeCard = (id) => {
-	console.log("father: card to like", id);
-};
+import LoginContext from "../../store/loginContext";
+import useCardActions from "../../hooks/useCardActions";
+import { useSearch } from "../../store/SearchContext";
+import "../../index.css";
 
 const HomePage = () => {
-	if (!initialDataFromServer || !initialDataFromServer.length) {
-		return <Typography>Could not find any items</Typography>;
+	const { login } = useContext(LoginContext);
+	const token = login?.token;
+	const userId = login?._id;
+	const isAdmin = login?.isAdmin;
+	const { searchQuery } = useSearch();
+	const [visibleCards, setVisibleCards] = useState(8);
+	const {
+		cards,
+		handleDeleteCard,
+		handleEditCard,
+		handleLikeCard,
+		handleClickCard,
+	} = useCardActions("/cards", token, userId, isAdmin, login);
+
+	useEffect(() => {
+	}, [login]);
+	if (!cards || cards.length === 0) {
+		return <Typography>Could not find any items.</Typography>;
 	}
+
+	const filteredCards = cards.filter((card) =>
+		card.title.toLowerCase().includes(searchQuery.toLowerCase())
+	);
+
 	return (
-		<Grid container spacing={2}>
-			{initialDataFromServer.map((item, index) => (
-				<Grid item lg={3} md={6} xs={12} key={"carsCard" + index}>
-					<CardComponent
-						id={item.id}
-						title={item.title}
-						subtitle={item.subtitle}
-						img={item.img}
-						phone="0500000000"
-						address={{
-							city: "South park",
-							street: "Hogwarts",
-							houseNumber: 123,
-							zipCode: 12345,
-						}}
-						cardNumber={12345}
-						onDelete={handleDeleteCard}
-						onEdit={handleEditCard}
-						onPhone={handlePhoneCard}
-						onLike={handleLikeCard}
-					/>
-				</Grid>
-			))}
+		<Grid container spacing={2} sx={{ justifyContent: "center" }}>
+			<Typography
+				variant="h2"
+				color=""
+				fontFamily={'"Bebas Neue"'}
+				sx={{ margin: 3, display: "flex", justifyContent: "center" }}
+			>
+				Welcome to Shlomo's course cards website!
+			</Typography>
+			<Typography
+				variant="h4"
+				color="primary.light"
+				fontFamily={'"Bebas Neue"'}
+				sx={{
+					marginBottom: 3,
+					display: "flex",
+					justifyContent: "center",
+				}}
+			>
+				Go ahead and enjoy exploring what beautiful cards the whole class made!
+			</Typography>
+
+			<Grid container spacing={2} sx={{ justifyContent: "center" }}>
+				{filteredCards.slice(0, visibleCards).map((card) => (
+					<Grid item lg={3} md={6} xs={12} key={card._id}>
+						<CardComponent
+							{...card}
+							id={card._id}
+							onDelete={() => handleDeleteCard(card._id)}
+							onEdit={() => handleEditCard(card._id)}
+							liked={card.likes?.includes(userId)}
+							onLike={() => handleLikeCard(card._id)}
+							onImageClick={() => handleClickCard(card._id)}
+						/>
+					</Grid>
+				))}
+				{filteredCards.length > visibleCards && (
+					<Grid
+						item
+						xs={12}
+						sx={{ marginTop: 3, display: "flex", justifyContent: "center" }}
+					>
+						<Button
+							variant="contained"
+							onClick={() => setVisibleCards((prev) => prev + 8)}
+							sx={{ marginBottom: 3 }}
+						>
+							Show More Cards
+						</Button>
+					</Grid>
+				)}
+			</Grid>
 		</Grid>
 	);
 };

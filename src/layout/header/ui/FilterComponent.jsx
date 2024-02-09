@@ -3,27 +3,28 @@ import Search from "./Search";
 import SearchIconWrapper from "./SearchIconWrapper";
 import StyledInputBase from "./StyledInputBase";
 import { useState } from "react";
+import { useSearch } from "../../../store/SearchContext";
 
 const FilterComponent = () => {
-  const [txt, setTxt] = useState("");
+	const { searchQuery, setSearchQuery } = useSearch();
 
-  const handleInputChange = (e) => {
-    setTxt(e.target.value);
-  };
+	const handleInputChange = (e) => {
+		setSearchQuery(e.target.value);
+	};
 
-  return (
-    <Search>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-      <StyledInputBase
-        placeholder="Search…"
-        inputProps={{ "aria-label": "search" }}
-        value={txt}
-        onChange={handleInputChange}
-      />
-    </Search>
-  );
+	return (
+		<Search>
+			<SearchIconWrapper>
+				<SearchIcon />
+			</SearchIconWrapper>
+			<StyledInputBase
+				placeholder="Search…"
+				inputProps={{ "aria-label": "search" }}
+				value={searchQuery}
+				onChange={handleInputChange}
+			/>
+		</Search>
+	);
 };
 
 export default FilterComponent;

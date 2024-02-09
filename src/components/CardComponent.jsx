@@ -1,64 +1,55 @@
 import {
-  Card,
-  CardHeader,
-  CardContent,
-  Typography,
-  CardActionArea,
-  CardMedia,
-  Divider,
-  IconButton,
-  Box,
+	Card,
+	CardHeader,
+	CardContent,
+	Typography,
+	CardActionArea,
+	CardMedia,
+	Divider,
+	IconButton,
+	Box,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeIcon from "@mui/icons-material/Mode";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import car1 from "../assets/imgs/car 1.jpg";
-import PropTypes from "prop-types";
-/**
- * title -> title
- * subtitle -> subheader
- */
+
 const CardComponent = ({
-  title,
-  subtitle,
-  img,
-  phone,
-  address,
-  cardNumber,
-  id,
-  onDelete,
-  onEdit,
-  onPhone,
-  onLike,
+	title,
+	subtitle,
+	image,
+	url,
+	alt,
+	phone,
+	address,
+	bizNumber,
+	liked,
+	id,
+	onDelete,
+	onEdit,
+	onPhone,
+	onLike,
+	onImageClick,
 }) => {
-  // let { title, subtitle, img, body } = props;
-  // console.log(props);
-  const handleDeleteClick = () => {
-    console.log("Clicked on delete", id);
-    onDelete(id);
-  };
-  const handleEditClick = () => {
-    console.log("Clicked on edit", id);
-    onEdit(id);
-  };
-  const handlePhoneClick = () => {
-    console.log("Clicked on phone", id);
-    onPhone(id);
-  };
-  const handleLikeClick = () => {
-    console.log("Clicked on like", id);
-    onLike(id);
-  };
-  return (
+	const handleDeleteCard = () => {
+		onDelete(id);
+	};
+	const handleEditCard = () => {
+		onEdit(id);
+	};
+	const handlePhoneCard = () => {
+		onPhone(id);
+	};
+	const handleLikeCard = () => {
+		onLike(id);
+	};
+	const handleClickCard = () => {
+		onImageClick(id);
+	};
+	return (
 		<Card square raised>
-			<CardActionArea>
-				<CardMedia
-					component="img"
-					image={img}
-					alt="american massle car"
-					height={200}
-				/>
+			<CardActionArea onClick={handleClickCard}>
+				{<CardMedia component="img" image={image.url} alt={alt} height={200} />}
 			</CardActionArea>
 			<CardHeader title={title} subheader={subtitle}></CardHeader>
 			<Divider></Divider>
@@ -73,29 +64,29 @@ const CardComponent = ({
 					<Typography component="span" fontWeight={700}>
 						Address:
 					</Typography>
-					{address.city}
+					{address?.city}
 				</Typography>
 				<Typography>
 					<Typography component="span" fontWeight={700}>
 						Card number:
 					</Typography>
-					{cardNumber}
+					{bizNumber}
 				</Typography>
 				<Box sx={{ display: "flex", justifyContent: "space-between" }}>
 					<Box>
-						<IconButton onClick={handleDeleteClick}>
+						<IconButton onClick={handleDeleteCard}>
 							<DeleteIcon />
 						</IconButton>
-						<IconButton onClick={handleEditClick}>
+						<IconButton onClick={handleEditCard}>
 							<ModeIcon />
 						</IconButton>
 					</Box>
 					<Box>
-						<IconButton onClick={handlePhoneClick}>
+						<IconButton onClick={handlePhoneCard}>
 							<LocalPhoneIcon />
 						</IconButton>
-						<IconButton onClick={handleLikeClick}>
-							<FavoriteIcon />
+						<IconButton onClick={handleLikeCard}>
+							<FavoriteIcon color={liked ? "error" : "inherit"} />
 						</IconButton>
 					</Box>
 				</Box>
@@ -104,22 +95,6 @@ const CardComponent = ({
 	);
 };
 
-CardComponent.propTypes = {
-  title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string,
-  img: PropTypes.string,
-  phone: PropTypes.string.isRequired,
-  address: PropTypes.shape({
-    city: PropTypes.string.isRequired,
-    street: PropTypes.string.isRequired,
-    houseNumber: PropTypes.number.isRequired,
-  }).isRequired,
-  cardNumber: PropTypes.number.isRequired,
-};
 
-CardComponent.defaultProps = {
-  img: car1,
-  subtitle: "subtitle default",
-};
 
 export default CardComponent;

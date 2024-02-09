@@ -1,5 +1,11 @@
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
+
 const MainComponent = ({ children }) => {
-  return <Container>{children}</Container>;
+	return (
+		<Box>
+			<Container>{children}</Container>
+		</Box>
+	);
 };
+
 export default MainComponent;
