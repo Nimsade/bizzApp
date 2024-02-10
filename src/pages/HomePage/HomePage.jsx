@@ -4,13 +4,14 @@ import CardComponent from "../../components/CardComponent";
 import LoginContext from "../../store/loginContext";
 import useCardActions from "../../hooks/useCardActions";
 import { useSearch } from "../../store/SearchContext";
-import "../../index.css";
+
 
 const HomePage = () => {
 	const { login } = useContext(LoginContext);
 	const token = login?.token;
 	const userId = login?._id;
 	const isAdmin = login?.isAdmin;
+	const 	isBusiness = login?.isBusiness;
 	const { searchQuery } = useSearch();
 	const [visibleCards, setVisibleCards] = useState(8);
 	const {
@@ -19,7 +20,7 @@ const HomePage = () => {
 		handleEditCard,
 		handleLikeCard,
 		handleClickCard,
-	} = useCardActions("/cards", token, userId, isAdmin, login);
+	} = useCardActions("/cards", token, userId, isAdmin,isBusiness, login);
 
 	useEffect(() => {
 	}, [login]);

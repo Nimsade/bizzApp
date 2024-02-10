@@ -28,7 +28,7 @@ const useCardActions = (url, token) => {
 
 	const handleDeleteCard = async (id) => {
 		if (!token) {
-			toast.error("You need to be logged in to delete cards.");
+			toast.error("You can only delete your own cards.");
 			return;
 		}
 
@@ -42,7 +42,7 @@ const useCardActions = (url, token) => {
 		const isAdmin = login.isAdmin;
 
 		if (!(isCreator || isAdmin)) {
-			toast.error("You do not have permission to delete this card.");
+			toast.error("You can only delete your own cards.");
 			return;
 		}
 
@@ -62,7 +62,7 @@ const useCardActions = (url, token) => {
 
 	const handleEditCard = async (id) => {
 		if (!token) {
-			toast.error("You need to be logged in to edit cards.");
+			toast.error("You can only edit your own cards..");
 			return;
 		}
 		const card = cards.find((card) => card._id === id);

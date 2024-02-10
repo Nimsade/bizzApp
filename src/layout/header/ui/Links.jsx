@@ -13,8 +13,8 @@ import LoginContext from "../../../store/loginContext";
 const Links = () => {
 	const { login } = useContext(LoginContext);
 	const loggedIn = login && login.token;
-	const isBusiness = login?.user?.isBusiness;
-	const isAdmin = login?.user?.isAdmin;
+	const isBusiness = login && login?.user?.isBusiness;
+	const isAdmin = login && login?.user?.isAdmin;
 
 	return (
 		<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -29,8 +29,7 @@ const Links = () => {
 						{myItem.children}
 					</NavLinkComponent>
 				))}
-
-			{loggedIn && 
+			{isBusiness &&
 				bizLinks.map((myItem, index) => (
 					<NavLinkComponent to={myItem.to} key={"isBusiness" + index}>
 						{myItem.children}

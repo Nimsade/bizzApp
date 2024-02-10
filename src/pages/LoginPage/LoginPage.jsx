@@ -17,7 +17,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
 import LoginContext from "../../store/loginContext";
-import validateLogin, {
+import  {
 	validateEmailLogin,
 	validatePasswordLogin,
 } from "../../validation/loginValidation";
@@ -51,8 +51,8 @@ const LoginPage = () => {
 				password: passwordValue,
 			});
 			const storage = rememberMe ? localStorage : sessionStorage;
-			storage.setItem("token", data);
-			const userInfoFromToken = jwtDecode(data); 
+			storage.setItem("token", data); 
+			const userInfoFromToken = jwtDecode(data);
 			setLogin(userInfoFromToken);
 			toast.success("LoggedIn Successfully", {
 				position: "top-right",
@@ -66,7 +66,17 @@ const LoginPage = () => {
 			});
 			navigate(ROUTES.HOME);
 		} catch (err) {
-			setLogin(null);
+			toast.error("Incorrect email or password,try again", {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "dark",
+			});
+			setLogin(null); 
 			localStorage.clear();
 			sessionStorage.clear();
 		}
@@ -176,7 +186,7 @@ const LoginPage = () => {
 						</Button>
 						<Grid container>
 							<Grid>
-								<Link to={ROUTES.REGISTER} >
+								<Link to={ROUTES.REGISTER}>
 									{"Don't have an account? Sign Up"}
 								</Link>
 							</Grid>

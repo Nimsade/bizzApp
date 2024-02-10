@@ -2,7 +2,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import Search from "./Search";
 import SearchIconWrapper from "./SearchIconWrapper";
 import StyledInputBase from "./StyledInputBase";
-import { useState } from "react";
 import { useSearch } from "../../../store/SearchContext";
 
 const FilterComponent = () => {
