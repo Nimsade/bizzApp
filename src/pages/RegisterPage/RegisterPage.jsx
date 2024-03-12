@@ -14,6 +14,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import { validateSchema } from "../../validation/registerValidation";
+import normalizeRegister from "./normalizeRegister";
 const RegisterPage = () => {
 	const [state, setState] = useState({
 		inputs: {
@@ -36,6 +37,20 @@ const RegisterPage = () => {
 		errors: {},
 	});
 	const navigate = useNavigate();
+	const requiredFields = [
+		"first",
+		"last",
+		"email",
+		"password",
+		"country",
+		"city",
+		"street",
+		"houseNumber",
+		"zip",
+	];
+	const areRequiredFieldsFilled = requiredFields.every(
+		(field) => state.inputs[field]
+	);
 	const handleChange = (e) => {
 		const { id, value, checked, type } = e.target;
 		setState((prevState) => ({
@@ -46,19 +61,26 @@ const RegisterPage = () => {
 			},
 		}));
 	};
+
 	const handleBlur = (e) => {
 		const { id } = e.target;
 		const value = state.inputs[id];
-		const error = validateSchema[id]
-			? validateSchema[id]({ [id]: value }).error
-			: null;
-		setState((prevState) => ({
-			...prevState,
-			errors: {
-				...prevState.errors,
-				[id]: error ? error.details[0].message : null,
-			},
-		}));
+		if (requiredFields.includes(id)) {
+			const validation = validateSchema[id]
+				? validateSchema[id]({ [id]: value })
+				: null;
+			const error =
+				validation && validation.error
+					? validation.error.details[0].message
+					: null;
+			setState((prevState) => ({
+				...prevState,
+				errors: {
+					...prevState.errors,
+					[id]: error,
+				},
+			}));
+		}
 	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -72,7 +94,8 @@ const RegisterPage = () => {
 
 		if (Object.keys(validationErrors).length === 0) {
 			try {
-				await axios.post("/users", state.inputs);
+				const normalizedData = normalizeRegister(state.inputs);
+				await axios.post("/users", normalizedData);
 				navigate(ROUTES.LOGIN);
 			} catch (err) {
 				console.error("error from axios", err);
@@ -81,6 +104,7 @@ const RegisterPage = () => {
 			setState((prevState) => ({ ...prevState, errors: validationErrors }));
 		}
 	};
+
 	const renderTextField = (
 		id,
 		label,
@@ -92,6 +116,7 @@ const RegisterPage = () => {
 			item
 			xs={12}
 			sm={id === "first" || id === "last" || id === "middle" ? 4 : 12}
+			key={id}
 		>
 			<TextField
 				required={required}
@@ -109,7 +134,6 @@ const RegisterPage = () => {
 			/>
 		</Grid>
 	);
-
 	return (
 		<Box
 			sx={{
@@ -180,7 +204,10 @@ const RegisterPage = () => {
 					fullWidth
 					variant="contained"
 					sx={{ mt: 3, mb: 2 }}
-					disabled={Object.values(state.errors).some((error) => error)}
+					disabled={
+						!areRequiredFieldsFilled ||
+						Object.values(state.errors).some((error) => error)
+					}
 				>
 					Sign Up
 				</Button>

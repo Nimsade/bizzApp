@@ -5,13 +5,12 @@ import LoginContext from "../../store/loginContext";
 import useCardActions from "../../hooks/useCardActions";
 import { useSearch } from "../../store/SearchContext";
 
-
 const HomePage = () => {
 	const { login } = useContext(LoginContext);
 	const token = login?.token;
 	const userId = login?._id;
 	const isAdmin = login?.isAdmin;
-	const 	isBusiness = login?.isBusiness;
+	const isBusiness = login?.isBusiness;
 	const { searchQuery } = useSearch();
 	const [visibleCards, setVisibleCards] = useState(8);
 	const {
@@ -19,11 +18,11 @@ const HomePage = () => {
 		handleDeleteCard,
 		handleEditCard,
 		handleLikeCard,
+		handlePhoneCard,
 		handleClickCard,
-	} = useCardActions("/cards", token, userId, isAdmin,isBusiness, login);
+	} = useCardActions("/cards", token, userId, isAdmin, isBusiness, login);
 
-	useEffect(() => {
-	}, [login]);
+	useEffect(() => {}, [login]);
 	if (!cards || cards.length === 0) {
 		return <Typography>Could not find any items.</Typography>;
 	}
@@ -65,6 +64,7 @@ const HomePage = () => {
 							onEdit={() => handleEditCard(card._id)}
 							liked={card.likes?.includes(userId)}
 							onLike={() => handleLikeCard(card._id)}
+							onPhone={() => handlePhoneCard(card._id)}
 							onImageClick={() => handleClickCard(card._id)}
 						/>
 					</Grid>

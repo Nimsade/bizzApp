@@ -11,8 +11,8 @@ import Links from "./ui/Links";
 import FilterComponent from "./ui/FilterComponent";
 
 
+
 const HeaderComponent = ({ isDarkTheme, onThemeChange, onSearchChange }) => {
-	
 	const handleThemeChange = (event) => {
 		onThemeChange(event.target.checked);
 	};

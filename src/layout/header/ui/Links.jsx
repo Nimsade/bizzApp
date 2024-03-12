@@ -15,7 +15,7 @@ const Links = () => {
 	const loggedIn = login && login.token;
 	const isBusiness = login && login?.user?.isBusiness;
 	const isAdmin = login && login?.user?.isAdmin;
-
+console.log("links Login status:", loggedIn);
 	return (
 		<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
 			{alwaysLinks.map((myItem, index) => (

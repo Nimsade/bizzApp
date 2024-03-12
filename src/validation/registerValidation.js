@@ -41,7 +41,7 @@ const zipSchema = Joi.object({
 	zip: Joi.number().min(2).max(999999999).required(),
 });
 const isBusinessSchema = Joi.object({
-	isBusiness: Joi.boolean().invalid(false).required(),
+	isBusiness: Joi.boolean().invalid(true).required(),
 });
 
 const validateFirstSchema = (first) => firstSchema.validate(first);

@@ -38,7 +38,7 @@ const CardComponent = ({
 		onEdit(id);
 	};
 	const handlePhoneCard = () => {
-		onPhone(id);
+		onPhone();
 	};
 	const handleLikeCard = () => {
 		onLike(id);
@@ -46,6 +46,7 @@ const CardComponent = ({
 	const handleClickCard = () => {
 		onImageClick(id);
 	};
+
 	return (
 		<Card square raised>
 			<CardActionArea onClick={handleClickCard}>
@@ -94,7 +95,5 @@ const CardComponent = ({
 		</Card>
 	);
 };
-
-
 
 export default CardComponent;

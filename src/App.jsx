@@ -1,5 +1,5 @@
 import * as React from "react";
-import {  useState } from "react";
+import { useState } from "react";
 import LayoutComponent from "./layout/LayoutComponent";
 import Router from "./routes/Router";
 import LoginContext from "./store/loginContext";
@@ -13,7 +13,7 @@ function App() {
 		<LoginContext.Provider value={{ login, setLogin }}>
 			<SearchProvider>
 				<ToastContainer />
-				<LayoutComponent>
+				<LayoutComponent key={login ? "logged-in" : "logged-out"}>
 					<Router />
 				</LayoutComponent>
 			</SearchProvider>

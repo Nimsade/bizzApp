@@ -17,7 +17,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
 import LoginContext from "../../store/loginContext";
-import  {
+import {
 	validateEmailLogin,
 	validatePasswordLogin,
 } from "../../validation/loginValidation";
@@ -51,9 +51,9 @@ const LoginPage = () => {
 				password: passwordValue,
 			});
 			const storage = rememberMe ? localStorage : sessionStorage;
-			storage.setItem("token", data); 
+			storage.setItem("token", data);
 			const userInfoFromToken = jwtDecode(data);
-			setLogin(userInfoFromToken);
+			setLogin({ ...userInfoFromToken, token: data.token });
 			toast.success("LoggedIn Successfully", {
 				position: "top-right",
 				autoClose: 5000,
@@ -76,7 +76,7 @@ const LoginPage = () => {
 				progress: undefined,
 				theme: "dark",
 			});
-			setLogin(null); 
+			setLogin(null);
 			localStorage.clear();
 			sessionStorage.clear();
 		}
