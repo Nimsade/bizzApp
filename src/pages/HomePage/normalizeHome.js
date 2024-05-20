@@ -1,10 +1,10 @@
-const normalizeCards = (cards, myId) => {
-	if (!cards) return null;
-	const newCards = cards.map((card) => ({
-		...card,
-		liked: card.likes.includes(myId),
+const normalizeItems = (items, myId) => {
+	if (!items) return null;
+	const newItems = items.map((item) => ({
+		...item,
+		liked: item.likes.includes(myId),
 	}));
-	return newCards;
+	return newItems;
 };
 
-export default normalizeCards;
+export default normalizeItems;

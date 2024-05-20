@@ -4,7 +4,7 @@ const LoginContext = createContext({
 	user: null,
 	token: null,
 	_id: null,
-	isBusiness: false,
+	isRegistered: false,
 	isAdmin: false,
 });
 
@@ -15,7 +15,7 @@ export const LoginProvider = ({ children }) => {
 		user: null,
 		token: null,
 		_id: null,
-		isBusiness: false,
+		isRegistered: false,
 		isAdmin: false,
 	});
 	return (

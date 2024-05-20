@@ -1,14 +1,19 @@
 import { Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
 
 const NavLinkComponent = ({ to, children }) => {
+	const theme = useTheme();
 	return (
-		<NavLink to={to} style={{ textDecoration: "none" }}>
+		<NavLink to={to} style={{ textDecoration: "none", }}>
 			{({ isActive }) => (
 				<Typography
-					color={isActive ? "text.headerActive" : "text.headerColor"}
-					sx={{ p: 2 }}
-					variant="h6"
+					color={isActive ? "secondary.main" : "inherit"} 
+					sx={{
+						padding: "6px 8px",
+						backgroundColor: theme.palette.primary.main, 
+						color: theme.palette.primary.contrastText,
+					}}
 				>
 					{children}
 				</Typography>

@@ -13,9 +13,8 @@ import LoginContext from "../../../store/loginContext";
 const Links = () => {
 	const { login } = useContext(LoginContext);
 	const loggedIn = login && login.token;
-	const isBusiness = login && login?.user?.isBusiness;
+	const isRegistered = login && login?.user?.isRegistered;
 	const isAdmin = login && login?.user?.isAdmin;
-console.log("links Login status:", loggedIn);
 	return (
 		<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
 			{alwaysLinks.map((myItem, index) => (
@@ -29,9 +28,9 @@ console.log("links Login status:", loggedIn);
 						{myItem.children}
 					</NavLinkComponent>
 				))}
-			{isBusiness &&
+			{isRegistered &&
 				bizLinks.map((myItem, index) => (
-					<NavLinkComponent to={myItem.to} key={"isBusiness" + index}>
+					<NavLinkComponent to={myItem.to} key={"isRegistered" + index}>
 						{myItem.children}
 					</NavLinkComponent>
 				))}

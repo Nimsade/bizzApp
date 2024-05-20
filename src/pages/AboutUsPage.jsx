@@ -3,41 +3,80 @@ import { Box, Container, Typography } from "@mui/material";
 
 const AboutUsPage = () => {
 	return (
-		<Container component="main" maxWidth="md">
-			<Box
-				sx={{
-					marginTop: 8,
-					display: "flex",
-					flexDirection: "column",
-					alignItems: "center",
-				}}
-			>
-				<Typography component="h1" variant="h1">
-					About This Site
-				</Typography>
-				<Typography variant="h4" sx={{ mt: 2 }}>
-					This website is designed to showcase various cards created by users.
-					It provides a platform for users to interact with, create, and manage
-					their cards effectively. Here are some of the features you can enjoy
-					on our site:
-				</Typography>
-				<Typography variant="h6" sx={{ mt:3 , textAlign: "left" }}>
-					- Create new cards with custom content.
-					<br />
-					- Edit or delete your existing cards.
-					<br />
-					- Like cards created by other users.
-					<br />- Switch between Light and Dark mode for a personalized
-					experience.
-				</Typography>
-				<Typography variant="h4" sx={{ mt: 5 }}>
-					To get started, simply navigate to the homepage and explore the cards.
-					If you wish to create your own cards, please sign up or log in to
-					access the full range of features.
+		<Container sx={{ padding: 3 }}>
+			<Box sx={{ textAlign: "center", marginBottom: 4 }}>
+				<Typography
+					variant="h2"
+					color="#25703a"
+					fontFamily={'"Bebas Neue"'}
+					sx={{ textAlign: "center" }}
+				>
+					About Us
 				</Typography>
 			</Box>
+			<Typography
+				variant="h4"
+				color="error"
+				fontFamily={'"Bebas Neue"'}
+				sx={{
+					marginBottom: 5,
+					display: "flex",
+					justifyContent: "center",
+					textAlign: "center",
+				}}
+			>
+				Welcome to our second-hand clothing store! We are dedicated to providing
+				you with a unique and sustainable shopping experience. Our store offers
+				a wide range of high-quality, pre-loved clothing items at affordable
+				prices.
+			</Typography>
+			<Typography
+				variant="body1"
+				paragraph
+				fontFamily={'"Bebas Neue"'}
+				sx={{ fontSize: "1.5rem" }}
+			>
+				Our mission is to promote sustainable fashion by giving pre-owned
+				clothing a new lease of life. By shopping with us, you are not only
+				finding great deals but also contributing to a more eco-friendly and
+				sustainable future.
+			</Typography>
+			<Typography
+				variant="body1"
+				paragraph
+				fontFamily={'"Bebas Neue"'}
+				sx={{ fontSize: "1.5rem" }}
+			>
+				Here’s how to navigate our site:
+			</Typography>
+			<Typography
+				variant="body1"
+				component="ul"
+				paragraph
+				fontFamily={'"Bebas Neue"'}
+				sx={{ fontSize: "1.5rem" }}
+			>
+				<li>Browse through our collection of second-hand clothing items.</li>
+				<li>Use the search bar on the home page to find specific items.</li>
+				<li>
+					Create an account to save your favorite items and view your order
+					history.
+				</li>
+				<li>
+					Add items to your cart and proceed to checkout to purchase them.
+				</li>
+				<li>Contact us through the footer for any inquiries or support.</li>
+			</Typography>
+			<Typography
+				variant="body1"
+				paragraph
+				fontFamily={'"Bebas Neue"'}
+				sx={{ fontSize: "1.5rem" }}
+			>
+				We hope you enjoy your shopping experience with us. Thank you for
+				supporting sustainable fashion!
+			</Typography>
 		</Container>
 	);
 };
-
 export default AboutUsPage;

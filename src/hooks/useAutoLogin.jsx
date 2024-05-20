@@ -34,7 +34,7 @@ const useAutoLogin = () => {
 					token: token,
 					_id: decodedToken._id,
 					isAdmin: userData.isAdmin,
-					isBusiness: userData.isBusiness,
+					isRegistered: userData.isRegistered,
 				});
 				setFinishAutoLogin(true);
 			} catch (error) {

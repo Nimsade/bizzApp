@@ -9,8 +9,7 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import { Switch, CardMedia } from "@mui/material";
 import Links from "./ui/Links";
 import FilterComponent from "./ui/FilterComponent";
-
-
+import { Link } from "react-router-dom";
 
 const HeaderComponent = ({ isDarkTheme, onThemeChange, onSearchChange }) => {
 	const handleThemeChange = (event) => {
@@ -20,12 +19,14 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange, onSearchChange }) => {
 		<Box sx={{ flexGrow: 1, mb: 2 }}>
 			<AppBar position="static">
 				<Toolbar>
-					<CardMedia
-						component="img"
-						image={`${process.env.PUBLIC_URL}/assets/imgs/logoweb.png`}
-						alt="Logo"
-						sx={{ width: 100, height: 100 }}
-					/>
+					<Link to="/" style={{ textDecoration: "none" }}>
+						<CardMedia
+							component="img"
+							image={`${process.env.PUBLIC_URL}/assets/imgs/nvYai151LB5rPXWYuhrtvFsX3ppJfYRjqpyps67F.png`}
+							alt="Logo"
+							sx={{ width: 100, height: 100 }}
+						/>
+					</Link>
 					<Links />
 					<FilterComponent onSearchChange={onSearchChange} />
 					<Box
@@ -47,9 +48,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange, onSearchChange }) => {
 						<IconButton
 							size="large"
 							aria-label="show more"
-						
 							aria-haspopup="true"
-						
 							color="inherit"
 						>
 							<MoreIcon />
@@ -57,8 +56,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange, onSearchChange }) => {
 					</Box>
 				</Toolbar>
 			</AppBar>
-		
-			
 		</Box>
 	);
 };

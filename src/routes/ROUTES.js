@@ -3,13 +3,13 @@ const ROUTES = {
   ABOUT: "/about",
   REGISTER: "/register",
   LOGIN: "/login",
-  EDITCARD: "/edit-card",
-  CREATECARD: "/createcard",
+  EDITITEM: "/edit-item",
+  CREATEITEM: "/createitem",
   SANDBOX: "/sandbox",
   USER_PROFILE:"/user-profile",
   EDIT_USER:"/edit-user",
-  MY_CARDS:"/my-cards",
-  FAV_CARDS:"/fav-cards",
+  MY_ITEMS:"/my-items",
+  FAV_ITEMS:"/fav-items",
   SHOW_BIZ:"/show-biz",
   
 };

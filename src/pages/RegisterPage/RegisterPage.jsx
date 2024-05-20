@@ -3,8 +3,6 @@ import {
 	Avatar,
 	Button,
 	TextField,
-	FormControlLabel,
-	Checkbox,
 	Grid,
 	Box,
 	Typography,
@@ -15,6 +13,7 @@ import { useNavigate, Link } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import { validateSchema } from "../../validation/registerValidation";
 import normalizeRegister from "./normalizeRegister";
+
 const RegisterPage = () => {
 	const [state, setState] = useState({
 		inputs: {
@@ -23,6 +22,7 @@ const RegisterPage = () => {
 			last: "",
 			email: "",
 			password: "",
+			profilePicture: null,
 			phone: "",
 			url: "",
 			alt: "",
@@ -32,7 +32,7 @@ const RegisterPage = () => {
 			street: "",
 			houseNumber: "",
 			zip: "",
-			isBusiness: false,
+			isRegistered: true,
 		},
 		errors: {},
 	});
@@ -48,16 +48,14 @@ const RegisterPage = () => {
 		"houseNumber",
 		"zip",
 	];
-	const areRequiredFieldsFilled = requiredFields.every(
-		(field) => state.inputs[field]
-	);
+
 	const handleChange = (e) => {
-		const { id, value, checked, type } = e.target;
+		const { id, value } = e.target;
 		setState((prevState) => ({
 			...prevState,
 			inputs: {
 				...prevState.inputs,
-				[id]: type === "checkbox" ? checked : value,
+				[id]: value,
 			},
 		}));
 	};
@@ -82,28 +80,39 @@ const RegisterPage = () => {
 			}));
 		}
 	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const validationErrors = Object.keys(state.inputs).reduce((acc, key) => {
-			const validation = validateSchema[key]
-				? validateSchema[key]({ [key]: state.inputs[key] }).error
-				: null;
-			if (validation) acc[key] = validation.details[0].message;
-			return acc;
-		}, {});
+		console.log("Submitting form...");
+		let validationErrors = {};
+
+		for (const key of Object.keys(state.inputs)) {
+			if (requiredFields.includes(key) || state.inputs[key]) {
+				const validation = validateSchema[key]
+					? validateSchema[key]({ [key]: state.inputs[key] })
+					: null;
+				if (validation && validation.error) {
+					validationErrors[key] = validation.error.details[0].message;
+				}
+			}
+		}
 
 		if (Object.keys(validationErrors).length === 0) {
 			try {
 				const normalizedData = normalizeRegister(state.inputs);
-				await axios.post("/users", normalizedData);
+				await axios.post("/users/register", normalizedData);
 				navigate(ROUTES.LOGIN);
+				console.log("Form submitted successfully!");
 			} catch (err) {
-				console.error("error from axios", err);
+				console.error("error from axios", err.response);
 			}
 		} else {
+			console.log("Validation Errors:", validationErrors);
 			setState((prevState) => ({ ...prevState, errors: validationErrors }));
+			console.log("Form has errors!");
 		}
 	};
+
 
 	const renderTextField = (
 		id,
@@ -134,6 +143,7 @@ const RegisterPage = () => {
 			/>
 		</Grid>
 	);
+
 	return (
 		<Box
 			sx={{
@@ -185,29 +195,13 @@ const RegisterPage = () => {
 							field
 						)
 					)}
-					<Grid item xs={12}>
-						<FormControlLabel
-							control={
-								<Checkbox
-									color="primary"
-									id="isBusiness"
-									checked={state.inputs.isBusiness}
-									onChange={handleChange}
-								/>
-							}
-							label="Business Account"
-						/>
-					</Grid>
 				</Grid>
 				<Button
 					type="submit"
 					fullWidth
 					variant="contained"
 					sx={{ mt: 3, mb: 2 }}
-					disabled={
-						!areRequiredFieldsFilled ||
-						Object.values(state.errors).some((error) => error)
-					}
+					disabled={Object.values(state.errors).some((error) => error)}
 				>
 					Sign Up
 				</Button>
@@ -222,4 +216,5 @@ const RegisterPage = () => {
 		</Box>
 	);
 };
+
 export default RegisterPage;

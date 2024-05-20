@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import LoginContext from "../../../store/loginContext";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Avatar } from "@mui/material";
 import { accountLogoLogin } from "../../myLinks";
 import { accountLogoLogOut } from "../../myLinks";
 import NavLinkComponent from "../NavLinkComponent";
@@ -9,7 +9,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import ROUTES from "../../../routes/ROUTES";
 import { useNavigate } from "react-router-dom";
 
-const AccountLogoComponent = () => {
+const AccountLogoComponent = (userData) => {
 	const { login } = useContext(LoginContext);
 	const loggedIn = login;
 	const navigate = useNavigate();
@@ -50,7 +50,11 @@ const AccountLogoComponent = () => {
 								sx={{ display: "flex", flexDirection: "column" }}
 							>
 								<IconButton>
-									<AccountCircle />
+									{userData && userData.profilePicture ? (
+										<Avatar src={userData.profilePicture} />
+									) : (
+										<AccountCircle />
+									)}
 									<Typography
 										variant="subtitle1"
 										color="dark"

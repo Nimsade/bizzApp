@@ -6,7 +6,7 @@ const firstSchema = Joi.object({
 	first: Joi.string().min(2).max(256).required(),
 });
 const middleSchema = Joi.object({
-	middle: Joi.string().min(2).max(256),
+	middle: Joi.string().max(256).allow("", null),
 });
 const lastSchema = Joi.object({
 	last: Joi.string().min(2).max(256).required(),
@@ -17,13 +17,13 @@ const phoneSchema = Joi.object({
 });
 
 const urlSchema = Joi.object({
-	url: Joi.string().min(14),
+	url: Joi.string().allow("", null),
 });
 const altSchema = Joi.object({
-	alt: Joi.string().min(2),
+	alt: Joi.string().allow("", null),
 });
 const stateSchema = Joi.object({
-	state: Joi.string().min(2).max(256),
+	state: Joi.string().max(256).allow("", null),
 });
 const countrySchema = Joi.object({
 	country: Joi.string().min(2).max(256).required(),
@@ -40,8 +40,8 @@ const houseNumberSchema = Joi.object({
 const zipSchema = Joi.object({
 	zip: Joi.number().min(2).max(999999999).required(),
 });
-const isBusinessSchema = Joi.object({
-	isBusiness: Joi.boolean().invalid(true).required(),
+const isRegisteredSchema = Joi.object({
+	isRegistered: Joi.boolean().required(),
 });
 
 const validateFirstSchema = (first) => firstSchema.validate(first);
@@ -57,8 +57,8 @@ const validateStreetSchema = (street) => streetSchema.validate(street);
 const validateHousenumberSchema = (houseNumber) =>
 	houseNumberSchema.validate(houseNumber);
 const validateZipSchema = (zip) => zipSchema.validate(zip);
-const validateIsBusinessSchema = (isBusiness) =>
-	isBusinessSchema.validate(isBusiness);
+const validateIsRegisteredSchema = (isRegistered) =>
+	isRegisteredSchema.validate(isRegistered);
 
 const validateSchema = {
 	first: validateFirstSchema,
@@ -75,7 +75,7 @@ const validateSchema = {
 	street: validateStreetSchema,
 	houseNumber: validateHousenumberSchema,
 	zip: validateZipSchema,
-	isBusiness: validateIsBusinessSchema,
+	isRegistered: validateIsRegisteredSchema,
 };
 
 export { validateSchema };

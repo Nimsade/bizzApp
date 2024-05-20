@@ -5,11 +5,11 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import AboutUsPage from "./../pages/AboutUsPage";
-import EditCardPage from "../pages/EditCardPage/EditCardPage";
-import FavoriteCardsPage from "../pages/FavoriteCardsPage";
-import CreateCardPage from "../pages/CreateCardPage/CreateCardPage";
-import MyCardsPage from "../pages/MyCardsPage";
-import ShowBizPage from "../pages/ShowBizPage";
+import EditItemPage from "../pages/EditItemPage/EditItemPage";
+import FavoriteItemsPage from "../pages/FavoriteItemsPage";
+import CreateItemPage from "../pages/CreateItemPage/CreateItemPage";
+import MyItemsPage from "../pages/MyItemsPage";
+import ShowBizPage from "../pages/ShowItemPage";
 import SandboxPage from "../pages/SandboxPage";
 
 const Router = () => {
@@ -19,10 +19,10 @@ const Router = () => {
 			<Route path={ROUTES.LOGIN} element={<LoginPage />} />
 			<Route path={ROUTES.REGISTER} element={<RegisterPage />} />
 			<Route path={ROUTES.ABOUT} element={<AboutUsPage />} />
-			<Route path={`${ROUTES.EDITCARD}/:id`} element={<EditCardPage />} />
-			<Route path={ROUTES.FAV_CARDS} element={<FavoriteCardsPage />} />
-			<Route path={ROUTES.CREATECARD} element={<CreateCardPage />} />
-			<Route path={ROUTES.MY_CARDS} element={<MyCardsPage />} />
+			<Route path={`${ROUTES.EDITITEM}/:id`} element={<EditItemPage />} />
+			<Route path={ROUTES.FAV_ITEMS} element={<FavoriteItemsPage />} />
+			<Route path={ROUTES.CREATEITEM} element={<CreateItemPage />} />
+			<Route path={ROUTES.MY_ITEMS} element={<MyItemsPage />} />
 			<Route path={`${ROUTES.SHOW_BIZ}/:id`} element={<ShowBizPage />} />
 			<Route path={ROUTES.SANDBOX} element={<SandboxPage/>} />
 			<Route path="*" element={<NotFoundPage />} />

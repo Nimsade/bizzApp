@@ -50,10 +50,9 @@ const LoginPage = () => {
 				email: emailValue,
 				password: passwordValue,
 			});
-			const storage = rememberMe ? localStorage : sessionStorage;
-			storage.setItem("token", data);
+			localStorage.setItem("token", data);
 			const userInfoFromToken = jwtDecode(data);
-			setLogin({ ...userInfoFromToken, token: data.token });
+			setLogin(userInfoFromToken);
 			toast.success("LoggedIn Successfully", {
 				position: "top-right",
 				autoClose: 5000,
@@ -66,19 +65,32 @@ const LoginPage = () => {
 			});
 			navigate(ROUTES.HOME);
 		} catch (err) {
-			toast.error("Incorrect email or password,try again", {
-				position: "top-right",
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: "dark",
-			});
+			console.error(err.response.data);
+			if (err.response.data === "Account is locked. Please try again later.") {
+				toast.error("Account is locked. Please try again later.", {
+					position: "top-right",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				});
+			} else {
+				toast.error("Incorrect email or password, try again", {
+					position: "top-right",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				});
+			}
 			setLogin(null);
 			localStorage.clear();
-			sessionStorage.clear();
 		}
 	};
 	const handleEmailBlur = () => {

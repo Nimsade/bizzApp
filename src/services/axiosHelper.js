@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://monkfish-app-z9uza.ondigitalocean.app/bcard2";
+axios.defaults.baseURL = "http://localhost:3030/api";
 
 axios.interceptors.request.use((config) => {
 	const token = localStorage.getItem("token");

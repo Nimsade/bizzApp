@@ -16,15 +16,27 @@ const alwaysLinks = [
 	{ to: ROUTES.HOME, children: "Home page" },
 	{ to: ROUTES.ABOUT, children: "About Us" },
 ];
-const loggedInLinks = [{ to: ROUTES.FAV_CARDS, children: "Favorites" }];
-const bizLinks = [{ to: ROUTES.CREATECARD, children: "Create a card" }];
+const loggedInLinks = [{ to: ROUTES.FAV_ITEMS, children: "Favorites" }];
+const bizLinks = [{ to: ROUTES.CREATEITEM, children: "Create a Item" }];
 const loggedOutLinks = [{ to: ROUTES.REGISTER, children: "Registration" }];
 const adminLinks = [{to: ROUTES.SANDBOX, children: "Sandbox" }];
 const alwaysLinksFooter = [
 	{
 		to: ROUTES.HOME,
 		children: (
-			<BottomNavigation showLabels>
+			<BottomNavigation
+				showLabels
+				sx={{
+					backgroundColor: "primary.main", 
+					"& .MuiBottomNavigationAction-root": {
+						backgroundColor: "transparent", 
+					},
+					"& .Mui-selected": {
+						color: "secondary.main", 
+						backgroundColor: "transparent", 
+					},
+				}}
+			>
 				<BottomNavigationAction label="Home" icon={<HomeIcon />} />
 			</BottomNavigation>
 		),
@@ -32,7 +44,19 @@ const alwaysLinksFooter = [
 	{
 		to: ROUTES.ABOUT,
 		children: (
-			<BottomNavigation showLabels>
+			<BottomNavigation
+				showLabels
+				sx={{
+					backgroundColor: "primary.main", 
+					"& .MuiBottomNavigationAction-root": {
+						backgroundColor: "transparent", 
+					},
+					"& .Mui-selected": {
+						color: "secondary.main", 
+						backgroundColor: "transparent", 
+					},
+				}}
+			>
 				<BottomNavigationAction label="About Us" icon={<InfoIcon />} />
 			</BottomNavigation>
 		),
@@ -40,9 +64,21 @@ const alwaysLinksFooter = [
 ];
 const loggedInLinksFooter = [
 	{
-		to: ROUTES.FAV_CARDS,
+		to: ROUTES.FAV_ITEMS,
 		children: (
-			<BottomNavigation showLabels>
+			<BottomNavigation
+				showLabels
+				sx={{
+					backgroundColor: "primary.main", 
+					"& .MuiBottomNavigationAction-root": {
+						backgroundColor: "transparent", 
+					},
+					"& .Mui-selected": {
+						color: "secondary.main", 
+						backgroundColor: "transparent", 
+					},
+				}}
+			>
 				<BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
 			</BottomNavigation>
 		),
@@ -50,10 +86,22 @@ const loggedInLinksFooter = [
 ];
 const bizLinksFooter = [
 	{
-		to: ROUTES.MY_CARDS,
+		to: ROUTES.MY_ITEMS,
 		children: (
-			<BottomNavigation showLabels sx={{ textDecoration: "none" }}>
-				<BottomNavigationAction label="My cards" icon={<RecentActorsIcon />} />
+			<BottomNavigation
+				showLabels
+				sx={{
+					backgroundColor: "primary.main", 
+					"& .MuiBottomNavigationAction-root": {
+						backgroundColor: "transparent", 
+					},
+					"& .Mui-selected": {
+						color: "secondary.main", 
+						backgroundColor: "transparent", 
+					},
+				}}
+			>
+				<BottomNavigationAction label="My items" icon={<RecentActorsIcon />} />
 			</BottomNavigation>
 		),
 	},

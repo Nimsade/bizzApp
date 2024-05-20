@@ -7,6 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { useState } from "react";
 import useAutoLogin from "../hooks/useAutoLogin";
 import Typography from "@mui/material/Typography";
+import backgroundImage from "../assets/images/backgroundimage.jpg"
 
 const LayoutComponent = ({ children }) => {
 	const finishAutoLogin = useAutoLogin();
@@ -16,14 +17,33 @@ const LayoutComponent = ({ children }) => {
 		"text.headerColor": "!gray",
 		"text.headerActive": "*white",
 		favActive: "*#FB0000",
+		primary: "#d0f2e3",
+		secondary: "#114a21",
+		error: "#c91212",
 	});
 
 	const darkMode = createTheme(themes.dark);
-	const lightMode = createTheme(themes.light);
+
+	const lightMode = createTheme({
+		...themes.light,
+		components: {
+			MuiCssBaseline: {
+				styleOverrides: {
+					body: {
+						backgroundImage: `url(${backgroundImage})`,
+						backgroundSize: "cover",
+						backgroundPosition: "center",
+						backgroundRepeat: "no-repeat",
+					},
+				},
+			},
+		},
+	});
 
 	const handleThemeChange = (checked) => {
 		setDarkTheme(checked);
 	};
+
 	return (
 		<ThemeProvider theme={isDarkTheme ? darkMode : lightMode}>
 			<CssBaseline />
@@ -42,4 +62,5 @@ const LayoutComponent = ({ children }) => {
 		</ThemeProvider>
 	);
 };
+
 export default LayoutComponent;

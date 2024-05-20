@@ -12,8 +12,8 @@ const SandBoxPage = () => {
 					alignItems: "center",
 				}}
 			>
-				<Typography component="h1" variant="h1" color={"primary"}>
-					Your the admin!!
+				<Typography component="h1" variant="h1" color="error">
+					You are the admin!!
 				</Typography>
 			</Box>
 		</Container>

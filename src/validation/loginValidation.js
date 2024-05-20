@@ -11,8 +11,6 @@ const loginSchema = Joi.object({
 				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*-])[A-Za-z\d!@#$%^&*-]{6,}$/
 			)
 		)
-		.min(8)
-		.max(20)
 		.required()
 		.messages({
 			"string.pattern.base":
@@ -49,4 +47,3 @@ const validatePasswordLogin = (passwordToCheck) =>
 	passwordLoginSchema.validate(passwordToCheck);
 
 export { validateEmailLogin, validatePasswordLogin, validateLogin };
-
